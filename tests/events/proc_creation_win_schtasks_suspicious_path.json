@@ -1,0 +1,61 @@
+{
+  "should_match": [
+    {
+      "description": "task runs binary from AppData Roaming",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Windows\\System32\\schtasks.exe",
+        "CommandLine": "schtasks.exe /create /sc onlogon /tn \"OneDrive Update\" /tr \"C:\\Users\\j.doe\\AppData\\Roaming\\odupd.exe\"",
+        "ParentImage": "C:\\Windows\\explorer.exe"
+      }
+    },
+    {
+      "description": "task runs script from Users Public",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Windows\\System32\\schtasks.exe",
+        "CommandLine": "schtasks /Create /SC MINUTE /MO 30 /TN sync /TR \"powershell -f C:\\Users\\Public\\s.ps1\"",
+        "ParentImage": "C:\\Windows\\explorer.exe"
+      }
+    }
+  ],
+  "should_not_match": [
+    {
+      "description": "task runs from Program Files",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Windows\\System32\\schtasks.exe",
+        "CommandLine": "schtasks.exe /create /tn Backup /tr \"C:\\Program Files\\Veeam\\agent.exe\" /sc daily",
+        "ParentImage": "C:\\Windows\\explorer.exe"
+      }
+    },
+    {
+      "description": "listing tasks",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Windows\\System32\\schtasks.exe",
+        "CommandLine": "schtasks.exe /query /fo LIST",
+        "ParentImage": "C:\\Windows\\explorer.exe"
+      }
+    },
+    {
+      "description": "Zoom task at logon from Program Files",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Windows\\System32\\schtasks.exe",
+        "CommandLine": "schtasks.exe /create /sc onlogon /tn \"Zoom Updater\" /tr \"C:\\Program Files\\Zoom\\bin\\ZoomUpdater.exe\"",
+        "ParentImage": "C:\\Windows\\explorer.exe"
+      }
+    }
+  ]
+}

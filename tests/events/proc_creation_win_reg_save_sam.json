@@ -1,0 +1,50 @@
+{
+  "should_match": [
+    {
+      "description": "save SAM hive",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Windows\\System32\\reg.exe",
+        "CommandLine": "reg.exe save HKLM\\SAM C:\\Windows\\Temp\\sam.save",
+        "ParentImage": "C:\\Windows\\explorer.exe"
+      }
+    },
+    {
+      "description": "save SYSTEM hive (needed to decrypt SAM)",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Windows\\System32\\reg.exe",
+        "CommandLine": "reg save hklm\\system sys.hiv /y",
+        "ParentImage": "C:\\Windows\\explorer.exe"
+      }
+    }
+  ],
+  "should_not_match": [
+    {
+      "description": "query a SYSTEM key",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Windows\\System32\\reg.exe",
+        "CommandLine": "reg query HKLM\\SYSTEM\\CurrentControlSet\\Services\\Tcpip",
+        "ParentImage": "C:\\Windows\\explorer.exe"
+      }
+    },
+    {
+      "description": "export a software key",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Windows\\System32\\reg.exe",
+        "CommandLine": "reg export HKLM\\SOFTWARE\\Vendor app.reg",
+        "ParentImage": "C:\\Windows\\explorer.exe"
+      }
+    }
+  ]
+}

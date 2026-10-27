@@ -1,0 +1,26 @@
+title: Microsoft Defender Protection Disabled With Set-MpPreference
+id: c8e3b30f-e5d9-436b-b3cd-aa73637a2d34
+status: experimental
+description: |
+  Detects Set-MpPreference used to turn off real-time, behavior, IOAV or script
+  scanning in Microsoft Defender. Attackers do this before running their tools.
+references:
+  - https://attack.mitre.org/techniques/T1685/
+author: Nathan Satge
+date: 2026-10-18
+tags:
+  - attack.defense-impairment
+  - attack.t1685
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection_cmdlet:
+    CommandLine|contains: 'Set-MpPreference'
+  selection_disable:
+    # Matches "-DisableRealtimeMonitoring $true", "-DisableRealtimeMonitoring:1", ...
+    CommandLine|re|i: '-Disable(RealtimeMonitoring|BehaviorMonitoring|IOAVProtection|ScriptScanning)\s*:?\s*(\$true|1)'
+  condition: all of selection_*
+falsepositives:
+  - Admins troubleshooting Defender on a test machine
+level: high

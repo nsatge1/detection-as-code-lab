@@ -1,0 +1,59 @@
+{
+  "should_match": [
+    {
+      "description": "StopLogging succeeded",
+      "event": {
+        "eventVersion": "1.09",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "StopLogging",
+        "awsRegion": "ca-central-1",
+        "sourceIPAddress": "203.0.113.50",
+        "userIdentity": {
+          "type": "IAMUser",
+          "userName": "ci-deployer"
+        },
+        "requestParameters": {
+          "name": "org-trail"
+        }
+      }
+    },
+    {
+      "description": "DeleteTrail succeeded",
+      "event": {
+        "eventVersion": "1.09",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "DeleteTrail",
+        "awsRegion": "ca-central-1",
+        "userIdentity": {
+          "type": "AssumedRole"
+        }
+      }
+    }
+  ],
+  "should_not_match": [
+    {
+      "description": "StopLogging denied (has errorCode)",
+      "event": {
+        "eventVersion": "1.09",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "StopLogging",
+        "errorCode": "AccessDenied",
+        "userIdentity": {
+          "type": "IAMUser",
+          "userName": "intern"
+        }
+      }
+    },
+    {
+      "description": "DescribeTrails (read only)",
+      "event": {
+        "eventVersion": "1.09",
+        "eventSource": "cloudtrail.amazonaws.com",
+        "eventName": "DescribeTrails",
+        "userIdentity": {
+          "type": "IAMUser"
+        }
+      }
+    }
+  ]
+}

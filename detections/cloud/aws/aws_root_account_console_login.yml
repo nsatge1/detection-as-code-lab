@@ -1,0 +1,27 @@
+title: AWS Root Account Console Login
+id: bbffa038-47a2-44ef-a5b0-390bbb8aacef
+status: experimental
+description: |
+  Detects a successful console login with the AWS root user. AWS best practice is
+  to never use root for daily work, so every root login should be checked.
+references:
+  - https://attack.mitre.org/techniques/T1078/004/
+author: Nathan Satge
+date: 2026-10-18
+tags:
+  - attack.initial-access
+  - attack.persistence
+  - attack.t1078.004
+logsource:
+  product: aws
+  service: cloudtrail
+detection:
+  selection:
+    eventSource: 'signin.amazonaws.com'
+    eventName: 'ConsoleLogin'
+    userIdentity.type: 'Root'
+    responseElements.ConsoleLogin: 'Success'
+  condition: selection
+falsepositives:
+  - Rare account-level tasks that really need root (billing, closing the account)
+level: medium

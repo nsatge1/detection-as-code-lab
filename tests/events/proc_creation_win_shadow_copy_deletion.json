@@ -1,0 +1,61 @@
+{
+  "should_match": [
+    {
+      "description": "vssadmin delete shadows",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Windows\\System32\\vssadmin.exe",
+        "CommandLine": "vssadmin.exe delete shadows /all /quiet",
+        "ParentImage": "C:\\Windows\\explorer.exe"
+      }
+    },
+    {
+      "description": "wmic shadowcopy delete",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Windows\\System32\\wbem\\WMIC.exe",
+        "CommandLine": "wmic shadowcopy delete /nointeractive",
+        "ParentImage": "C:\\Windows\\explorer.exe"
+      }
+    },
+    {
+      "description": "wbadmin delete catalog",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Windows\\System32\\wbadmin.exe",
+        "CommandLine": "wbadmin delete catalog -quiet",
+        "ParentImage": "C:\\Windows\\explorer.exe"
+      }
+    }
+  ],
+  "should_not_match": [
+    {
+      "description": "vssadmin list shadows (read only)",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Windows\\System32\\vssadmin.exe",
+        "CommandLine": "vssadmin.exe list shadows",
+        "ParentImage": "C:\\Windows\\explorer.exe"
+      }
+    },
+    {
+      "description": "wmic shadowcopy list",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Windows\\System32\\wbem\\WMIC.exe",
+        "CommandLine": "wmic shadowcopy list brief",
+        "ParentImage": "C:\\Windows\\explorer.exe"
+      }
+    }
+  ]
+}

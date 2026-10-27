@@ -1,0 +1,29 @@
+title: LSASS Memory Dump With Comsvcs.dll MiniDump
+id: 3c11ad73-108d-4f31-85d7-7631690e934c
+status: experimental
+description: |
+  Detects the MiniDump export of comsvcs.dll, a well-known way to dump LSASS
+  memory and steal credentials with only built-in Windows files.
+references:
+  - https://lolbas-project.github.io/lolbas/Libraries/Comsvcs/
+  - https://attack.mitre.org/techniques/T1003/001/
+author: Nathan Satge
+date: 2026-10-18
+tags:
+  - attack.credential-access
+  - attack.t1003.001
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection_dll:
+    CommandLine|contains: 'comsvcs'
+  selection_export:
+    CommandLine|contains:
+      - 'MiniDump'
+      - '#24'
+      - '#+24'
+  condition: all of selection_*
+falsepositives:
+  - None expected
+level: critical

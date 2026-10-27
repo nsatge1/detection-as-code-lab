@@ -1,0 +1,24 @@
+title: Windows Security Audit Log Cleared
+id: 2cbde6af-a844-49ea-b52c-ce06996544d1
+status: experimental
+description: |
+  Detects event 1102 "The audit log was cleared". Attackers clear logs to hide
+  what they did on the machine.
+references:
+  - https://attack.mitre.org/techniques/T1685/005/
+author: Nathan Satge
+date: 2026-10-18
+tags:
+  - attack.defense-impairment
+  - attack.t1685.005
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    EventID: 1102
+    Provider_Name: 'Microsoft-Windows-Eventlog'
+  condition: selection
+falsepositives:
+  - Planned log rotation by an administrator (rare on servers that forward logs)
+level: high

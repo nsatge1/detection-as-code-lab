@@ -1,0 +1,50 @@
+{
+  "should_match": [
+    {
+      "description": "English group name",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Windows\\System32\\net.exe",
+        "CommandLine": "net localgroup administrators svc_backup /add",
+        "ParentImage": "C:\\Windows\\explorer.exe"
+      }
+    },
+    {
+      "description": "French group name via net1",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Windows\\System32\\net1.exe",
+        "CommandLine": "net1 localgroup \"Administrateurs\" helpdesk /ADD",
+        "ParentImage": "C:\\Windows\\explorer.exe"
+      }
+    }
+  ],
+  "should_not_match": [
+    {
+      "description": "listing members",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Windows\\System32\\net.exe",
+        "CommandLine": "net localgroup administrators",
+        "ParentImage": "C:\\Windows\\explorer.exe"
+      }
+    },
+    {
+      "description": "adding to a non-admin group",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Windows\\System32\\net.exe",
+        "CommandLine": "net localgroup \"Remote Desktop Users\" j.doe /add",
+        "ParentImage": "C:\\Windows\\explorer.exe"
+      }
+    }
+  ]
+}

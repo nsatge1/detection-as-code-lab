@@ -1,0 +1,28 @@
+{
+  "should_match": [
+    {
+      "description": "clear Security log with wevtutil",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Windows\\System32\\wevtutil.exe",
+        "CommandLine": "wevtutil.exe cl Security",
+        "ParentImage": "C:\\Windows\\System32\\cmd.exe"
+      }
+    }
+  ],
+  "should_not_match": [
+    {
+      "description": "query the Security log (read only)",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Windows\\System32\\wevtutil.exe",
+        "CommandLine": "wevtutil qe Security /c:5 /f:text",
+        "ParentImage": "C:\\Windows\\System32\\cmd.exe"
+      }
+    }
+  ]
+}

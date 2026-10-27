@@ -1,0 +1,33 @@
+title: Certutil Used to Download a File
+id: d95a7d99-9950-4bd3-a818-803dca442d50
+status: experimental
+description: |
+  Detects certutil.exe used with -urlcache or -verifyctl and a URL.
+  Certutil is a signed Windows binary (LOLBin) that attackers abuse to download tools.
+references:
+  - https://lolbas-project.github.io/lolbas/Binaries/Certutil/
+  - https://attack.mitre.org/techniques/T1105/
+author: Nathan Satge
+date: 2026-10-18
+tags:
+  - attack.command-and-control
+  - attack.t1105
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection_img:
+    - Image|endswith: '\certutil.exe'
+    - OriginalFileName: 'CertUtil.exe'
+  selection_flags:
+    CommandLine|contains|windash:
+      - '-urlcache'
+      - '-verifyctl'
+  selection_url:
+    CommandLine|contains:
+      - 'http://'
+      - 'https://'
+  condition: all of selection_*
+falsepositives:
+  - Very rare. Some old internal scripts use certutil to fetch CRLs
+level: high

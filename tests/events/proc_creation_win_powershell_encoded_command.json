@@ -1,0 +1,85 @@
+{
+  "should_match": [
+    {
+      "description": "full -EncodedCommand flag",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "CommandLine": "powershell.exe -NoProfile -EncodedCommand SQBFAFgAIAAoAE4AZQB3AC0ATwBiAGoAZQBjAHQAKQA=",
+        "ParentImage": "C:\\Windows\\explorer.exe",
+        "OriginalFileName": "PowerShell.EXE"
+      }
+    },
+    {
+      "description": "short -enc flag with hidden window",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "CommandLine": "powershell.exe -w hidden -enc SQBFAFgA",
+        "ParentImage": "C:\\Windows\\explorer.exe"
+      }
+    },
+    {
+      "description": "slash variant /e with pwsh",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
+        "CommandLine": "pwsh.exe /e SQBFAFgA",
+        "ParentImage": "C:\\Windows\\explorer.exe"
+      }
+    },
+    {
+      "description": "renamed binary caught by OriginalFileName",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Users\\Public\\update.exe",
+        "CommandLine": "update.exe -ec SQBFAFgA",
+        "ParentImage": "C:\\Windows\\explorer.exe",
+        "OriginalFileName": "PowerShell.EXE"
+      }
+    }
+  ],
+  "should_not_match": [
+    {
+      "description": "normal script with -File",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "CommandLine": "powershell.exe -File C:\\Scripts\\backup.ps1",
+        "ParentImage": "C:\\Windows\\explorer.exe"
+      }
+    },
+    {
+      "description": "-ExecutionPolicy is not -e",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "CommandLine": "powershell.exe -ExecutionPolicy Bypass -File inventory.ps1",
+        "ParentImage": "C:\\Windows\\explorer.exe"
+      }
+    },
+    {
+      "description": "other binary with -enc",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Tools\\ffmpeg.exe",
+        "CommandLine": "ffmpeg.exe -i in.mp4 -enc h264 out.mp4",
+        "ParentImage": "C:\\Windows\\explorer.exe"
+      }
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+title: Windows Security Event Log Cleared With wevtutil
+id: F00D4CF9-DDB7-46A5-8C9A-A293F039E1DA
+status: experimental
+description: |
+  Detects wevtutil.exe used to clear the Windows Security log from the command line.
+  Attackers clear logs to hide what they did.
+references:
+  - https://attack.mitre.org/techniques/T1685/005/
+author: Nathan Satge
+date: 2026-10-27
+tags:
+  - attack.defense-impairment
+  - attack.t1685.005
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection_img:
+    - Image|endswith: '\wevtutil.exe'
+    - OriginalFileName: 'wevtutil.exe'
+  selection_clear:
+    CommandLine|re|i: '\s(cl|clear-log)\s+"?security"?(\s|$)'
+  condition: all of selection_*
+falsepositives:
+  - Admins who clear the Security log on purpose during a lab reset
+level: high

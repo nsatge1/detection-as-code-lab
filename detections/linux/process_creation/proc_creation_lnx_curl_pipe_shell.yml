@@ -1,0 +1,26 @@
+title: Remote Script Downloaded and Piped Into a Shell
+id: be0b2cce-2e15-4b98-96d4-c809d7735dde
+status: experimental
+description: |
+  Detects "curl ... | sh" or "wget -O- ... | bash" patterns. Crypto-miners and
+  botnets use this to download and run their payload in one line.
+references:
+  - https://attack.mitre.org/techniques/T1105/
+  - https://attack.mitre.org/techniques/T1059/004/
+author: Nathan Satge
+date: 2026-10-18
+tags:
+  - attack.command-and-control
+  - attack.t1105
+  - attack.execution
+  - attack.t1059.004
+logsource:
+  product: linux
+  category: process_creation
+detection:
+  selection:
+    CommandLine|re: '(curl|wget)\s[^|]*\|\s*(sudo\s+)?(ba|da|z)?sh\b'
+  condition: selection
+falsepositives:
+  - Official install scripts (Homebrew, rustup). Allow-list them by URL
+level: medium
