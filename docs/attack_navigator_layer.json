@@ -1,0 +1,127 @@
+{
+  "name": "detection-as-code-lab coverage",
+  "versions": {
+    "attack": "20",
+    "layer": "4.5",
+    "navigator": "5.1.0"
+  },
+  "domain": "enterprise-attack",
+  "description": "Techniques covered by the Sigma rules in detection-as-code-lab. Score = highest rule level (1 low ... 4 critical).",
+  "techniques": [
+    {
+      "techniqueID": "T1003.001",
+      "score": 4,
+      "comment": "LSASS Memory Dump With Comsvcs.dll MiniDump",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1003.002",
+      "score": 3,
+      "comment": "SAM, SYSTEM or SECURITY Hive Saved With Reg.exe",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1027.010",
+      "score": 3,
+      "comment": "PowerShell Encoded Command Execution",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1053.005",
+      "score": 2,
+      "comment": "Scheduled Task Created to Run From a User-Writable Folder",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1059.001",
+      "score": 3,
+      "comment": "PowerShell Encoded Command Execution",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1059.004",
+      "score": 3,
+      "comment": "Linux Reverse Shell Using /dev/tcp; Remote Script Downloaded and Piped Into a Shell",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1078.004",
+      "score": 2,
+      "comment": "AWS Root Account Console Login",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1098",
+      "score": 2,
+      "comment": "User Added to the Local Administrators Group With Net.exe",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1105",
+      "score": 3,
+      "comment": "Certutil Used to Download a File; Remote Script Downloaded and Piped Into a Shell",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1204.002",
+      "score": 3,
+      "comment": "Office Application Spawns a Shell or Script Interpreter",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1490",
+      "score": 3,
+      "comment": "Shadow Copies or Backup Catalog Deleted",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1566.001",
+      "score": 3,
+      "comment": "Office Application Spawns a Shell or Script Interpreter",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1685",
+      "score": 3,
+      "comment": "Microsoft Defender Protection Disabled With Set-MpPreference",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1685.002",
+      "score": 3,
+      "comment": "AWS CloudTrail Logging Stopped or Trail Deleted",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1685.005",
+      "score": 3,
+      "comment": "Windows Security Audit Log Cleared; Windows Security Event Log Cleared With wevtutil",
+      "enabled": true
+    }
+  ],
+  "gradient": {
+    "colors": [
+      "#fff3b0",
+      "#f4a259",
+      "#bc4b51"
+    ],
+    "minValue": 1,
+    "maxValue": 4
+  },
+  "legendItems": [
+    {
+      "label": "low / medium",
+      "color": "#fff3b0"
+    },
+    {
+      "label": "high",
+      "color": "#f4a259"
+    },
+    {
+      "label": "critical",
+      "color": "#bc4b51"
+    }
+  ],
+  "showTacticRowBackground": true,
+  "selectSubtechniquesWithParent": false
+}
