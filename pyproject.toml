@@ -1,0 +1,19 @@
+[project]
+name = "detection-as-code-lab"
+version = "1.0.0"
+description = "Sigma detection rules with validation, unit tests, SIEM conversion and ATT&CK coverage in CI."
+requires-python = ">=3.10"
+authors = [{ name = "Nathan Satge" }]
+license = { text = "MIT" }
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM"]
