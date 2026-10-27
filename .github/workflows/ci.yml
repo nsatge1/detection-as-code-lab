@@ -1,0 +1,70 @@
+name: Detection CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# Least privilege: the pipeline only needs to read the repository.
+permissions:
+  contents: read
+
+jobs:
+  detections:
+    name: Lint, validate, test and convert rules
+    runs-on: ubuntu-latest
+    steps:
+      # Actions are pinned to a commit SHA (supply-chain hardening). Dependabot updates them.
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Lint Python code (ruff)
+        run: |
+          ruff check .
+          ruff format --check .
+
+      - name: Quality gate (metadata, ATT&CK tags, test events)
+        run: python -m scripts.validate_rules
+
+      - name: Sigma best practices (sigma check against the latest ATT&CK data)
+        # D3FEND tags are not used in this repository.
+        run: sigma check --fail-on-issues -x d3_fendtag detections
+
+      - name: Unit tests (true positives / true negatives) + attack simulation
+        run: pytest -v --junitxml=build/test-results.xml
+
+      - name: ATT&CK coverage report is up to date
+        run: python -m scripts.coverage_report --check
+
+      - name: Convert rules to Splunk, Elastic and Sentinel queries
+        run: python -m scripts.convert_rules --output build/queries
+
+      - name: Hunt over the simulated attack day
+        run: python -m scripts.hunt samples/attack_simulation.jsonl | tee build/hunt.txt
+
+      - name: Job summary
+        if: always()
+        run: |
+          {
+            echo '## Hunt results'
+            echo '```'
+            cat build/hunt.txt 2>/dev/null || echo "not run"
+            echo '```'
+            cat docs/coverage.md
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload SIEM queries and test results
+        if: always()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        with:
+          name: detection-build
+          path: build/
+          retention-days: 30
