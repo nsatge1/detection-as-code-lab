@@ -10,4 +10,4 @@ pysigma-pipeline-windows==2.0.1
 # Engine, tests and lint
 PyYAML==6.0.3
 pytest==9.1.1
-ruff==0.17.1
+ruff==0.17.2
