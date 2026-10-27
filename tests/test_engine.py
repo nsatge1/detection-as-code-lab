@@ -133,6 +133,7 @@ def test_wildcards_and_escapes(pattern, text, expected):
 
     assert bool(re.fullmatch(sigma_pattern_to_regex(pattern), text)) is expected
 
+
 # --------------------------------------------------------------------------- #
 # cidr modifier
 # --------------------------------------------------------------------------- #
@@ -145,9 +146,7 @@ def test_cidr_matches_ip_inside_network():
 
 
 def test_cidr_accepts_a_list_of_networks():
-    rule = make_rule(
-        {"sel": {"SourceIp|cidr": ["192.168.0.0/16", "172.16.0.0/12"]}, "condition": "sel"}
-    )
+    rule = make_rule({"sel": {"SourceIp|cidr": ["192.168.0.0/16", "172.16.0.0/12"]}, "condition": "sel"})
     assert rule.matches({"SourceIp": "172.20.1.1"}) is True
     assert rule.matches({"SourceIp": "8.8.8.8"}) is False
 
